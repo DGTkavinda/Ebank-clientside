@@ -15,12 +15,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -31,52 +33,81 @@ public class customerListPage extends javax.swing.JFrame {
 
     /**
      * Creates new form customerListPage
-     */
+     */String userAccountNoToDelete ="";//
+    
     public customerListPage() {
         initComponents();
+       
         
-try {
-
-            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/employee/iron");
+               try {
+            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/employee/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
             conn.setRequestProperty("Accept", "application/json");
+            //conn.setRequestProperty("Content-Type", "application/json; charset=utf8");
+
+            //JSONObject json = new JSONObject();
+            //json.put("username", "shimak2");
+            //json.put("password", "123");
+
+            //OutputStream os = conn.getOutputStream();
+            //os.write(json.toString().getBytes("UTF-8"));
+            //os.flush();
 
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
             }
+
+            //os.close();
 
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-            ArrayList <String> loginData= new ArrayList<String>();
-           
-            String output;
-            System.out.println("Output from Server .... \n");
-            int i=0;
-            
-            DefaultListModel<String> model = new DefaultListModel<>();
-            JList<String> list = new JList<>( model );
 
-            while ((output = br.readLine()) != null) {
-               
-                loginData.add(output);
-                
-                
-                model.addElement(output);
-                
+            String output = br.readLine();
+            System.out.println("Output from Server .... \n");
+            System.out.println(output);
+
+            /*while ((output = br.readLine()) != null) {
                 System.out.println(output);
-            }
-            jList1.setModel(model);
-            
-         
+                output = br.readLine();
+            }*/
 
             conn.disconnect();
 
-        } catch (Exception e) {
+            JSONObject jObject = new JSONObject(output); // json
+            JSONArray jsonArray = jObject.getJSONArray("body");//json body (array)
+            //System.out.println(jsonArray.toString());
+            JList<String> jList1;
+            Iterator iterator = jsonArray.iterator();
+            DefaultListModel<String> model = new DefaultListModel<>();
+            String data="";
+            
+            
+            while (iterator.hasNext()) {
+                JSONObject object = (JSONObject) iterator.next();
+                //System.out.println(object.toString());
+                
 
-           
+                String AccountNum=object.getString("AccountNum");
+                String name=object.getString("name");
 
+                data = AccountNum+":"+name;
+                 model.addElement(data);
+
+            }
+
+
+             JList<String> list = new JList<>( model );
+
+             jScrollPane1.add(list);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        
         
         
     }
@@ -88,7 +119,7 @@ try {
      */
     
     
-     String userAccountNoToDelete ="";//
+     
      
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
