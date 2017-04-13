@@ -5,6 +5,8 @@
  */
 package my.Ebank;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +14,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import org.json.JSONObject;
 
 /**
@@ -36,7 +41,7 @@ private String sortcode;
 private String Balance;
 private String card;
 private String birthDate;
-
+ String userAccountNoToDelete ="";
 String jsonString;
 
 
@@ -84,6 +89,8 @@ public static void getData(){
 
        public CustomerAccountPage() {
         initComponents();
+        
+       
     }
 
     /**
@@ -124,6 +131,8 @@ public static void getData(){
         btnAddCustomer = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -282,6 +291,20 @@ public static void getData(){
 
         jButton3.setText("previous");
 
+        updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
+
+        deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -294,6 +317,10 @@ public static void getData(){
                 .addContainerGap()
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(updateBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAddCustomer)
                 .addGap(21, 21, 21)
                 .addComponent(jButton2)
@@ -313,7 +340,9 @@ public static void getData(){
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddCustomer)
                     .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(updateBtn)
+                    .addComponent(deleteBtn))
                 .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -447,6 +476,101 @@ public static void getData(){
 
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+      JOptionPane.showMessageDialog(null, "Account Updated");
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+        
+          JLabel l=new JLabel("Customer AccountNumber to be deleted");
+
+      JPanel p=new JPanel(new GridLayout(1, 2, 10, 10));
+      p.setPreferredSize(new Dimension(450, 50));
+      JTextField t=new JTextField(" Account Number");
+      t.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            try{
+            
+                
+                
+                String data=t.getText();
+              
+                userAccountNoToDelete =data;
+            }catch(Exception ex){
+               // ex.printStackTrace();
+            }
+        }
+      });
+      p.add(l);
+      p.add(t);
+      // URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer");
+
+    int option = JOptionPane.showConfirmDialog(null,p,"JOptionPane Example : ",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+    
+            
+         
+        System.out.println(userAccountNoToDelete);
+        try {
+            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("DELETE");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("Content-Type", "application/json; charset=utf8");
+
+            JSONObject json = new JSONObject();
+            json.put("accountNum", userAccountNoToDelete);
+           
+
+            OutputStream os = conn.getOutputStream();
+            os.write(json.toString().getBytes("UTF-8"));
+            os.flush();
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            os.close();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+            String output = br.readLine();
+            System.out.println("Output from Server .... \n");
+            System.out.println(output);
+
+            /*while ((output = br.readLine()) != null) {
+                System.out.println(output);
+                output = br.readLine();
+            }*/
+
+            conn.disconnect();
+
+            JSONObject jObject = new JSONObject(output); // json
+
+            if (jObject.get("response").equals("success")) {
+                System.out.println("[SUCCESS]");
+                JOptionPane.showMessageDialog(null, "Customer Deleted");
+                //jLabel4.setText("successfully login");
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "There Is No Such Customer");
+                System.out.println("[FAILED]");
+                //jLabel4.setText("failed");
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -486,6 +610,7 @@ public static void getData(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCustomer;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -514,5 +639,6 @@ public static void getData(){
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtmobileNum;
     private javax.swing.JTextField txtsortCode;
+    private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }

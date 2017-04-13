@@ -122,6 +122,11 @@ try {
         });
 
         btnEditCus.setText("Edit customer");
+        btnEditCus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditCusActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -177,11 +182,11 @@ try {
        
        
        
-        int cost = 100;
+        
       JLabel l=new JLabel("Customer AccountNumber to be deleted");
 
       JPanel p=new JPanel(new GridLayout(1, 2, 10, 10));
-      p.setPreferredSize(new Dimension(400, 50));
+      p.setPreferredSize(new Dimension(450, 50));
       JTextField t=new JTextField(" Account Number");
       t.addKeyListener(new java.awt.event.KeyAdapter() {
         public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -273,6 +278,10 @@ try {
         CustomerAccountPage cusRegPage=new CustomerAccountPage();
               cusRegPage.setVisible(true);
     }//GEN-LAST:event_btnAddCusActionPerformed
+
+    private void btnEditCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditCusActionPerformed
 
     /**
      * @param args the command line arguments

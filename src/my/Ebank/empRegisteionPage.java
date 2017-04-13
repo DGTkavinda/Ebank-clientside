@@ -5,6 +5,8 @@
  */
 package my.Ebank;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +14,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import org.json.JSONObject;
 
 /**
@@ -48,6 +53,8 @@ public class empRegisteionPage extends javax.swing.JFrame {
         emppasswordTxt = new javax.swing.JPasswordField();
         empReg = new javax.swing.JButton();
         empClear = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,6 +82,20 @@ public class empRegisteionPage extends javax.swing.JFrame {
             }
         });
 
+        updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
+
+        deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -96,7 +117,11 @@ public class empRegisteionPage extends javax.swing.JFrame {
                             .addComponent(emppasswordTxt)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(empClear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(updateBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(empReg)))
                 .addContainerGap())
         );
@@ -119,10 +144,12 @@ public class empRegisteionPage extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(emppasswordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(empReg)
-                    .addComponent(empClear))
+                    .addComponent(empClear)
+                    .addComponent(updateBtn)
+                    .addComponent(deleteBtn))
                 .addContainerGap())
         );
 
@@ -133,24 +160,25 @@ public class empRegisteionPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void empClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empClearActionPerformed
-            empNametxt.setText("");
-            emppositionTxt.setText("");
-            empusernameTxt.setText("");
-           emppasswordTxt.setText("");
+            
+             empNametxt.setText("");
+             emppositionTxt.setText("");
+             empusernameTxt.setText("");
+             emppasswordTxt.setText("");
     }//GEN-LAST:event_empClearActionPerformed
 
     private void empRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empRegActionPerformed
@@ -176,7 +204,7 @@ public class empRegisteionPage extends javax.swing.JFrame {
             json.put("name",empNametxt.getText());
             json.put("Position",emppositionTxt.getText());
             json.put("username",empusernameTxt.getText());
-            json.put("passqord", emppasswordTxt.getText());
+            json.put("password", emppasswordTxt.getText());
             
             
             
@@ -234,6 +262,104 @@ public class empRegisteionPage extends javax.swing.JFrame {
                  cusList.setVisible(true);           
     }//GEN-LAST:event_empRegActionPerformed
 
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        // TODO add your handling code here:
+      
+        
+         new UpdateEmployeeform().setVisible(true);
+        
+        
+    }//GEN-LAST:event_updateBtnActionPerformed
+        
+    String userAccountNoToDelete;
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+        
+         JLabel l=new JLabel("Employee UserName to be deleted");
+
+      JPanel p=new JPanel(new GridLayout(1, 2, 10, 10));
+      p.setPreferredSize(new Dimension(400, 50));
+      JTextField t=new JTextField(" UserName");
+      t.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            try{
+            
+                
+                
+                String data=t.getText();
+              
+                userAccountNoToDelete =data;
+            }catch(Exception ex){
+               // ex.printStackTrace();
+            }
+        }
+      });
+      p.add(l);
+      p.add(t);
+      // URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer");
+
+    int option = JOptionPane.showConfirmDialog(null,p,"JOptionPane Example : ",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+    
+            
+         
+        
+        try {
+            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/employee/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("DELETE");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("Content-Type", "application/json; charset=utf8");
+
+            JSONObject json = new JSONObject();
+            json.put("username",userAccountNoToDelete );
+           
+
+            OutputStream os = conn.getOutputStream();
+            os.write(json.toString().getBytes("UTF-8"));
+            os.flush();
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            os.close();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+            String output = br.readLine();
+            System.out.println("Output from Server .... \n");
+            System.out.println(output);
+
+            /*while ((output = br.readLine()) != null) {
+                System.out.println(output);
+                output = br.readLine();
+            }*/
+
+            conn.disconnect();
+
+            JSONObject jObject = new JSONObject(output); // json
+
+            if (jObject.get("response").equals("success")) {
+                System.out.println("[SUCCESS]");
+                JOptionPane.showMessageDialog(null, "Employee Deleted");
+                //jLabel4.setText("successfully login");
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "There Is No Such Employee");
+                System.out.println("[FAILED]");
+                //jLabel4.setText("failed");
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -270,6 +396,7 @@ public class empRegisteionPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JButton empClear;
     private javax.swing.JTextField empNametxt;
     private javax.swing.JButton empReg;
@@ -281,5 +408,6 @@ public class empRegisteionPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }
