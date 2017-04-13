@@ -93,7 +93,7 @@ public class customerListPage extends javax.swing.JFrame {
                 //System.out.println(object.toString());
                 
 
-                String AccountNum=object.getString("AccountNum");
+               
                 String name=object.getString("name");
 
               
