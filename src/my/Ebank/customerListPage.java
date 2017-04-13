@@ -50,21 +50,13 @@ public class customerListPage extends javax.swing.JFrame {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setRequestProperty("Accept", "application/json");
-            //conn.setRequestProperty("Content-Type", "application/json; charset=utf8");
-
-            //JSONObject json = new JSONObject();
-            //json.put("username", "shimak2");
-            //json.put("password", "123");
-
-            //OutputStream os = conn.getOutputStream();
-            //os.write(json.toString().getBytes("UTF-8"));
-            //os.flush();
+            
 
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
-            //os.close();
+            
 
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
