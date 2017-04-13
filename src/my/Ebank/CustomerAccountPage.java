@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,9 +30,9 @@ import org.json.JSONObject;
 
 public class CustomerAccountPage extends javax.swing.JFrame {
 private String cusName;
-private String Bdate;
-private String Bmonth;
-private String BYear;
+private int Bdate;
+private int Bmonth;
+private int BYear;
 private String address;
 private String mobileNo;
 private String Email;
@@ -382,10 +383,10 @@ public static void getData(){
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
        
         cusName=txtCusName.getText();
-        Bdate=(String)spinDate.getValue();
-        Bmonth=(String)spinmonth.getValue();
-        BYear=(String)spinYear.getValue();
-        birthDate =Bdate+":"+Bmonth+":"+BYear;
+        Bdate=(Integer)spinDate.getValue();
+        Bmonth=(Integer)spinmonth.getValue();
+        BYear=(Integer)spinYear.getValue();
+        birthDate= Bdate+":"+Bmonth+":"+BYear;
         address=txtAddress.getText();
         mobileNo=txtmobileNum.getText();
         Email=txtEmail.getText();
@@ -421,7 +422,7 @@ public static void getData(){
             json.put("mobile" ,mobileNo );
             json.put( "email",Email );
             json.put("accountType" ,accountType );
-            json.put( "accuntNumber",accountNumber );
+            json.put( "accountNumber",accountNumber );
             json.put("sortCode",sortcode);
             json.put("balance",Balance);
             json.put("card",card);
@@ -512,27 +513,27 @@ public static void getData(){
          
         System.out.println(userAccountNoToDelete);
         try {
-            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer");
+            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer/"+userAccountNoToDelete);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("Content-Type", "application/json; charset=utf8");
+            //conn.setRequestProperty("Content-Type", "application/json; charset=utf8");
 
-            JSONObject json = new JSONObject();
-            json.put("accountNum", userAccountNoToDelete);
+            //JSONObject json = new JSONObject();
+            //json.put("accountNum", userAccountNoToDelete);
            
 
-            OutputStream os = conn.getOutputStream();
-            os.write(json.toString().getBytes("UTF-8"));
-            os.flush();
+            //OutputStream os = conn.getOutputStream();
+            //os.write(json.toString().getBytes("UTF-8"));
+            //os.flush();
 
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
-            os.close();
+            //os.close();
 
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 

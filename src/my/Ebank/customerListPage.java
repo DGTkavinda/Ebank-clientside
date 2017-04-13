@@ -39,7 +39,11 @@ public class customerListPage extends javax.swing.JFrame {
         initComponents();
        
         
-               try {
+              try {
+
+
+
+
             URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/employee/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -92,8 +96,8 @@ public class customerListPage extends javax.swing.JFrame {
                 String AccountNum=object.getString("AccountNum");
                 String name=object.getString("name");
 
-                data = AccountNum+":"+name;
-                 model.addElement(data);
+              
+                 model.addElement(name);
 
             }
 
