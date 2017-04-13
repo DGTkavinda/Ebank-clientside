@@ -477,7 +477,7 @@ public static void getData(){
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
-      JOptionPane.showMessageDialog(null, "Account Updated");
+        new UpdateCustomerForm().setVisible(true);
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
