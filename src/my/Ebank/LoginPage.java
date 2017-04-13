@@ -186,7 +186,7 @@ public class LoginPage extends javax.swing.JFrame {
             } else {
                 txtUsername.setText("");
                 txtPassword.setText("");
-                JOptionPane.showMessageDialog(null, "Invalid UserName Or PassWord");
+                JOptionPane.showMessageDialog(null, "Invalid UserName Or Password");
                 System.out.println("[FAILED]");
                 //jLabel4.setText("failed");
             }

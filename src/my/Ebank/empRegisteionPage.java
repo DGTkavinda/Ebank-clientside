@@ -202,7 +202,7 @@ public class empRegisteionPage extends javax.swing.JFrame {
             JSONObject json = new JSONObject();
             
             json.put("name",empNametxt.getText());
-            json.put("Position",emppositionTxt.getText());
+            json.put("position",emppositionTxt.getText());
             json.put("username",empusernameTxt.getText());
             json.put("password", emppasswordTxt.getText());
             
