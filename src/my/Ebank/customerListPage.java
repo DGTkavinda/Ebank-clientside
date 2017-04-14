@@ -148,7 +148,7 @@ public class customerListPage extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnAddCus = new javax.swing.JButton();
         btnDeleteCus = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        detailsBtn = new javax.swing.JToggleButton();
         scrollPane1 = new java.awt.ScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -169,10 +169,10 @@ public class customerListPage extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("jToggleButton1");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        detailsBtn.setText("View Details");
+        detailsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                detailsBtnActionPerformed(evt);
             }
         });
 
@@ -187,7 +187,7 @@ public class customerListPage extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAddCus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteCus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton1))
+                    .addComponent(detailsBtn))
                 .addGap(26, 26, 26))
         );
         jPanel1Layout.setVerticalGroup(
@@ -198,7 +198,7 @@ public class customerListPage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnDeleteCus)
                 .addGap(19, 19, 19)
-                .addComponent(jToggleButton1)
+                .addComponent(detailsBtn)
                 .addContainerGap(197, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -318,7 +318,7 @@ public class customerListPage extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnDeleteCusActionPerformed
-
+        String customerAccuntToview="";
     private void btnAddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCusActionPerformed
                            customerListPage.this.setVisible(false);
 
@@ -326,14 +326,49 @@ public class customerListPage extends javax.swing.JFrame {
               cusRegPage.setVisible(true);
     }//GEN-LAST:event_btnAddCusActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-       
+    private void detailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsBtnActionPerformed
+
+        CustomerDetailsForm detailForm=new CustomerDetailsForm();
+        
+       detailForm.cusName="dfds";
+       detailForm.addDetials();
+        
+        detailForm.setVisible(true);
+        
+        
+        /* detailForm.cusName="sdf";
+        JLabel l=new JLabel("Customer AccountNumber to be deleted");
+        
+        JPanel p=new JPanel(new GridLayout(1, 2, 10, 10));
+        p.setPreferredSize(new Dimension(450, 50));
+        JTextField t=new JTextField(" Account Number");
+        t.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+        try{
+        
+        
+        
+        String data=t.getText();
+        
+        userAccountNoToDelete =data;
+        }catch(Exception ex){
+        // ex.printStackTrace();
+        }
+        }
+        });
+        p.add(l);
+        p.add(t);
+        // URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer");
+        
+        int option = JOptionPane.showConfirmDialog(null,p,"JOptionPane Example : ",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        
+        */
         
         
         
         
                  
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_detailsBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -373,8 +408,8 @@ public class customerListPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCus;
     private javax.swing.JButton btnDeleteCus;
+    private javax.swing.JToggleButton detailsBtn;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton1;
     private java.awt.ScrollPane scrollPane1;
     // End of variables declaration//GEN-END:variables
 }
