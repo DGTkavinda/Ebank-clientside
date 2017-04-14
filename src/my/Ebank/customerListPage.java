@@ -34,77 +34,75 @@ public class customerListPage extends javax.swing.JFrame {
     /**
      * Creates new form customerListPage
      */String userAccountNoToDelete ="";//
-    
+    String name="";
     public customerListPage() {
         initComponents();
        
         
-              try {
-
-
-
-
-            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/employee/");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            conn.setRequestProperty("Accept", "application/json");
-            
-
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-            }
-
-            
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-            String output = br.readLine();
-            System.out.println("Output from Server .... \n");
-            System.out.println(output);
-
-            /*while ((output = br.readLine()) != null) {
-                System.out.println(output);
-                output = br.readLine();
-            }*/
-
-            conn.disconnect();
-
-            JSONObject jObject = new JSONObject(output); // json
-            JSONArray jsonArray = jObject.getJSONArray("body");//json body (array)
-            //System.out.println(jsonArray.toString());
-            JList<String> jList1;
-            Iterator iterator = jsonArray.iterator();
-            DefaultListModel<String> model = new DefaultListModel<>();
-            String data="";
-            
-            
-            while (iterator.hasNext()) {
-                JSONObject object = (JSONObject) iterator.next();
-                //System.out.println(object.toString());
-                
-
-               
-                String name=object.getString("name");
-
-              
-                 model.addElement(name);
-
-            }
-
-
-             JList<String> list = new JList<>( model );
-
-             jScrollPane1.add(list);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        /*   try {
+        
+        
+        
+        
+        URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/employee/");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.setRequestProperty("Accept", "application/json");
+        
+        
+        if (conn.getResponseCode() != 200) {
+        throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
         }
         
         
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+        
+        String output = br.readLine();
+        System.out.println("Output from Server .... \n");
+        System.out.println(output);
+        
+        
+        
+        conn.disconnect();
+        
+        JSONObject jObject = new JSONObject(output); // json
+        JSONArray jsonArray = jObject.getJSONArray("body");//json body (array)
+        //System.out.println(jsonArray.toString());
+        JList<String> jList1;
+        Iterator iterator = jsonArray.iterator();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        String data="";
+        
+        
+        while (iterator.hasNext()) {
+        JSONObject object = (JSONObject) iterator.next();
+        //System.out.println(object.toString());
+        
+        
+        
+        name=object.getString("name");
+        
+        
+        model.addElement(name);
+        model.addElement("hju");
+        
+        }
+        
+        
+        JList<String> list = new JList<>( model );
+        
+        jScrollPane1.add(list);
+        
+        } catch (MalformedURLException e) {
+        e.printStackTrace();
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        
+        */
         
     }
 
@@ -126,6 +124,7 @@ public class customerListPage extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<>();
         btnAddCus = new javax.swing.JButton();
         btnDeleteCus = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -147,6 +146,13 @@ public class customerListPage extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,9 +162,14 @@ public class customerListPage extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddCus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteCus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddCus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeleteCus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(51, 51, 51))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,6 +182,8 @@ public class customerListPage extends javax.swing.JFrame {
                 .addComponent(btnAddCus)
                 .addGap(18, 18, 18)
                 .addComponent(btnDeleteCus)
+                .addGap(38, 38, 38)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -295,6 +308,79 @@ public class customerListPage extends javax.swing.JFrame {
               cusRegPage.setVisible(true);
     }//GEN-LAST:event_btnAddCusActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+              try {
+
+
+
+
+            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/employee/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestProperty("Accept", "application/json");
+            
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+            String output = br.readLine();
+            System.out.println("Output from Server .... \n");
+            System.out.println(output);
+
+            /*while ((output = br.readLine()) != null) {
+                System.out.println(output);
+                output = br.readLine();
+            }*/
+
+            conn.disconnect();
+            
+            
+
+           
+            //System.out.println(jsonArray.toString());
+            JList<String> jList1;
+          
+            DefaultListModel<String> model = new DefaultListModel<>();
+           
+             JSONArray jsonArr = new JSONArray(output);
+       
+       
+        
+        for (int i = 0; i < jsonArr.length(); i++){
+            JSONObject jsonObj = jsonArr.getJSONObject(i);
+
+            System.out.println(jsonObj);
+            
+            String name=jsonObj.getString("name");
+
+              
+                 model.addElement(name);
+        }
+
+            
+         
+
+
+             JList<String> list = new JList<>( model );
+
+             jScrollPane1.add(list);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -333,6 +419,7 @@ public class customerListPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCus;
     private javax.swing.JButton btnDeleteCus;
+    private javax.swing.JButton jButton1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
