@@ -44,7 +44,7 @@ public class customerListPage extends javax.swing.JFrame {
         
         
         
-        URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/employee/");
+        URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer/");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setDoOutput(true);
@@ -76,7 +76,8 @@ public class customerListPage extends javax.swing.JFrame {
         
         DefaultListModel<String> model = new DefaultListModel<>();
         
-        JSONArray jsonArr = new JSONArray(output);
+        JSONObject json = new JSONObject(output);
+        JSONArray jsonArr = json.getJSONArray("body");
         
         
         
@@ -85,7 +86,7 @@ public class customerListPage extends javax.swing.JFrame {
         
         System.out.println(jsonObj);
         
-        String name=jsonObj.getString("name");
+        String name=jsonObj.getString("name")+" "+jsonObj.getString("accountNum")+" "+jsonObj.getString("accountType");
         
         
         model.addElement(name);
@@ -259,27 +260,27 @@ public class customerListPage extends javax.swing.JFrame {
          
         System.out.println(userAccountNoToDelete);
         try {
-            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer");
+            URL url = new URL("http://localhost:8080/bank_services_ws_war_exploded/api/customer/"+userAccountNoToDelete);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("Content-Type", "application/json; charset=utf8");
+            //conn.setRequestProperty("Content-Type", "application/json; charset=utf8");
 
-            JSONObject json = new JSONObject();
-            json.put("accountNum", userAccountNoToDelete);
+            //JSONObject json = new JSONObject();
+            //json.put("accountNum", userAccountNoToDelete);
            
 
-            OutputStream os = conn.getOutputStream();
-            os.write(json.toString().getBytes("UTF-8"));
-            os.flush();
+            //OutputStream os = conn.getOutputStream();
+            //os.write(json.toString().getBytes("UTF-8"));
+            //os.flush();
 
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
-            os.close();
+            //os.close();
 
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
